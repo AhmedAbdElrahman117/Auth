@@ -11,7 +11,7 @@ class CustomDivider extends StatelessWidget {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 0.5, vertical: 0.5),
           height: 2,
-          width: MediaQuery.of(context).size.width * 0.39,
+          width: MediaQuery.of(context).size.width * 0.25,
           color: Colors.grey.shade300,
         ),
         Padding(
@@ -19,7 +19,7 @@ class CustomDivider extends StatelessWidget {
             horizontal: 12,
           ),
           child: Text(
-            'OR',
+            'Login With',
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey.shade500,
@@ -29,7 +29,7 @@ class CustomDivider extends StatelessWidget {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 1),
           height: 2,
-          width: MediaQuery.of(context).size.width * 0.39,
+          width: MediaQuery.of(context).size.width * 0.25,
           color: Colors.grey.shade300,
         ),
       ],

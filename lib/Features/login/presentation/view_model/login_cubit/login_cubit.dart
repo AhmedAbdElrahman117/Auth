@@ -8,16 +8,11 @@ import 'package:twitter_login/twitter_login.dart';
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginInitial());
 
-  bool isLoading = false;
-  String email = '';
-  String pass = '';
-
   void loginProgress() {
     emit(LoginInProgress());
   }
 
   void loginWithEmail({required String email, required String pass}) async {
-    isLoading = true;
     emit(LoginLoading());
     try {
       await FirebaseAuth.instance
@@ -26,11 +21,9 @@ class LoginCubit extends Cubit<LoginStates> {
     } on FirebaseAuthException catch (e) {
       emit(LoginFailed(e.code.toString()));
     }
-    isLoading = false;
   }
 
   void googleLogin() async {
-    isLoading = true;
     emit(LoginLoading());
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth =
@@ -45,11 +38,9 @@ class LoginCubit extends Cubit<LoginStates> {
       await FirebaseAuth.instance.signInWithCredential(credential);
       emit(LoginSuccess());
     }
-    isLoading = false;
   }
 
   void loginWithFacebook() async {
-    isLoading = true;
     emit(LoginLoading());
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
@@ -62,11 +53,9 @@ class LoginCubit extends Cubit<LoginStates> {
       await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
       emit(LoginSuccess());
     }
-    isLoading = false;
   }
 
   void twitterLogin() async {
-    isLoading = true;
     emit(LoginLoading());
     final twitterLogin = TwitterLogin(
       apiKey: 'pebS9UvK3fwhA0suG52NgYsAF',
@@ -85,6 +74,5 @@ class LoginCubit extends Cubit<LoginStates> {
       await FirebaseAuth.instance.signInWithCredential(twitterCredential);
       emit(LoginSuccess());
     }
-    isLoading = false;
   }
 }

@@ -9,32 +9,46 @@ class CustomButton extends StatelessWidget {
   final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: TextButton.icon(
-        onPressed: onPressed,
-        label: Text(
-          text,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.black,
-          ),
+    return IconButton.filledTonal(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll(
+          Colors.grey.shade100,
         ),
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-            side: BorderSide(
-              color: Colors.grey.shade600,
-            ),
-          ),
-        ),
-        icon: Image.asset(
-          icon,
-          scale: 2,
-        ),
-        iconAlignment: IconAlignment.end,
+      ),
+      icon: Image.asset(
+        icon,
+        scale: 1.5,
       ),
     );
   }
 }
+
+
+// Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 20),
+//       child: TextButton.icon(
+//         onPressed: onPressed,
+//         label: Text(
+//           text,
+//           style: const TextStyle(
+//             fontSize: 20,
+//             color: Colors.black,
+//           ),
+//         ),
+//         style: TextButton.styleFrom(
+//           padding: const EdgeInsets.symmetric(vertical: 10),
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(15),
+//             side: BorderSide(
+//               color: Colors.grey.shade600,
+//             ),
+//           ),
+//         ),
+        // icon: Image.asset(
+        //   icon,
+        //   scale: 2,
+        // ),
+//         iconAlignment: IconAlignment.end,
+//       ),
+//     );

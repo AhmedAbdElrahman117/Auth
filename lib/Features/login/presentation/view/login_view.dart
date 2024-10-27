@@ -1,13 +1,11 @@
 import 'package:auth/Features/login/presentation/view/widgets/custom_divider.dart';
 import 'package:auth/Features/login/presentation/view/widgets/email_text_field.dart';
-import 'package:auth/Features/login/presentation/view/widgets/facebook_login_button.dart';
-import 'package:auth/Features/login/presentation/view/widgets/google_login_button.dart';
 import 'package:auth/Features/login/presentation/view/widgets/login_button.dart';
 import 'package:auth/Features/login/presentation/view/widgets/logo.dart';
 import 'package:auth/Features/login/presentation/view/widgets/password_text_field.dart';
 import 'package:auth/Features/login/presentation/view/widgets/sign_up_button.dart';
 import 'package:auth/Features/login/presentation/view/widgets/sign_utils.dart';
-import 'package:auth/Features/login/presentation/view/widgets/twitter_login_button.dart';
+import 'package:auth/Features/login/presentation/view/widgets/social_login.dart';
 import 'package:auth/Features/login/presentation/view/widgets/welcome_text.dart';
 import 'package:auth/Features/login/presentation/view_model/login_cubit/login_cubit.dart';
 import 'package:auth/Features/login/presentation/view_model/login_cubit/login_states.dart';
@@ -22,6 +20,9 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> gKey = GlobalKey();
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccess) {
@@ -35,50 +36,73 @@ class LoginView extends StatelessWidget {
       },
       builder: (context, state) {
         return ModalProgressHUD(
-          inAsyncCall: BlocProvider.of<LoginCubit>(context).isLoading,
+          inAsyncCall: state is LoginLoading,
           child: Scaffold(
             body: SafeArea(
               child: Form(
                 key: gKey,
                 child: ListView(
                   children: [
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.02,
                     ),
                     const Logo(),
                     const WelcomeText(),
                     const SizedBox(
                       height: 15,
                     ),
-                    const EmailTextField(),
-                    const SizedBox(
-                      height: 20,
+                    EmailTextField(
+                      emailController: emailController,
+                      hintText: 'Enter your Email',
+                      labelText: 'Email Address',
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Email Required';
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
-                    const PasswordTextField(),
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.035,
+                    ),
+                    PasswordTextField(
+                      passwordController: passwordController,
+                      hintText: ' Enter you Password',
+                      labelText: 'Password',
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Password Required';
+                        } else if (value.length < 8) {
+                          return 'Short Password';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
                     const SizedBox(
                       height: 4,
                     ),
                     const SignUtils(),
                     LoginButton(
-                      email: BlocProvider.of<LoginCubit>(context).email,
-                      pass: BlocProvider.of<LoginCubit>(context).pass,
+                      emailController: emailController,
+                      passwordController: passwordController,
                       gKey: gKey,
                     ),
                     const CustomDivider(),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.sizeOf(context).height * 0.025,
                     ),
-                    const GoogleLoginButton(),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const FacebookLoginButton(),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const TwitterLoginButton(),
-                    const SizedBox(
-                      height: 10,
+                    const SocialLogin(),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Dont\'t Have An Account',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey.shade500,
+                        ),
+                      ),
                     ),
                     const SignUpButton(),
                   ],

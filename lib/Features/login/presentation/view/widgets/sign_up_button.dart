@@ -9,14 +9,17 @@ class SignUpButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SignButton(
-      title: 'Sign up',
-      onPressed: () {
-        Get.to(
-          () => const SignUpView(),
-          transition: kTrans,
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: SignButton(
+        title: 'Sign up',
+        onPressed: () {
+          Get.to(
+            () => const SignUpView(),
+            transition: kTrans,
+          );
+        },
+      ),
     );
   }
 }

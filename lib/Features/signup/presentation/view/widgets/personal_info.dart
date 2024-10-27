@@ -1,130 +1,113 @@
-import 'package:auth/Features/login/presentation/view/widgets/custom_text_form_field.dart';
+import 'dart:developer';
+
+import 'package:auth/Features/login/presentation/view/widgets/email_text_field.dart';
 import 'package:auth/Features/login/presentation/view/widgets/logo.dart';
 import 'package:auth/Features/login/presentation/view/widgets/sign_button.dart';
+import 'package:auth/Features/signup/data/user_data.dart';
+import 'package:auth/Features/signup/presentation/view/widgets/age.dart';
+import 'package:auth/Features/signup/presentation/view/widgets/date_of_birth.dart';
+import 'package:auth/Features/signup/presentation/view/widgets/user_name.dart';
+import 'package:auth/Features/signup/presentation/view_model/SignUpCubit/sign_up_cubit.dart';
+import 'package:auth/Features/signup/presentation/view_model/sign_up_states.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:pinput/pinput.dart';
 
-class PersonalInfo extends StatefulWidget {
-  PersonalInfo({super.key});
+class PersonalInfo extends StatelessWidget {
+  const PersonalInfo({
+    super.key,
+    required this.userData,
+  });
 
-  @override
-  State<PersonalInfo> createState() => _PersonalInfoState();
-}
-
-class _PersonalInfoState extends State<PersonalInfo> {
-  late GlobalKey<FormState> pKey = GlobalKey();
-  late String name;
-  late String dateOfBirth;
-  late String age;
+  final UserData userData;
 
   @override
   Widget build(BuildContext context) {
-    var authData = Get.arguments;
+    GlobalKey<FormState> pKey = GlobalKey();
+    TextEditingController userNameController = TextEditingController();
+    TextEditingController dateController = TextEditingController();
+    TextEditingController ageController = TextEditingController();
 
-    return Scaffold(
-      body: SafeArea(
-        child: Form(
-          key: pKey,
-          child: ListView(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.16,
-              ),
-              const Logo(),
-              const Text(
-                'Personal Information',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
+    return BlocBuilder<SignUpCubit, SignUpStates>(
+      builder: (context, state) {
+        return ModalProgressHUD(
+          inAsyncCall: state is SignUpLoading,
+          progressIndicator: const CircularProgressIndicator(
+            color: Colors.black,
+          ),
+          child: Scaffold(
+            body: SafeArea(
+              child: Form(
+                key: pKey,
+                child: ListView(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.16,
+                    ),
+                    const Logo(),
+                    const Text(
+                      'Personal Information',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    UserName(
+                      userNameController: userNameController,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: DateOfBirth(
+                            dateController: dateController,
+                            userData: userData,
+                          ),
+                        ),
+                        Expanded(
+                          child: Age(
+                            ageController: ageController,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SignButton(
+                            title: 'Sign Up',
+                            onPressed: () async {
+                              if (pKey.currentState!.validate()) {
+                                userData.name = userNameController.text;
+                                userData.age = int.parse(ageController.text);
+                                BlocProvider.of<SignUpCubit>(context).signUp(
+                                  userData: userData,
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(
-                height: 25,
-              ),
-              CustomTextFormField(
-                hintText: 'Enter your Full Name',
-                labelText: 'Full Name',
-                onChanged: (value) {
-                  name = value;
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Name Required';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              CustomTextFormField(
-                hintText: 'Enter your Date of Birth',
-                labelText: 'Date of Birth',
-                onChanged: (value) {
-                  dateOfBirth = value;
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Date Required';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              CustomTextFormField(
-                hintText: 'Enter your Age',
-                labelText: 'Age',
-                onChanged: (value) {
-                  age = value;
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Age Required';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: SignButton(
-                      title: 'Sign Up',
-                      onPressed: () async {
-                        if (pKey.currentState!.validate()) {
-                          await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
-                            email: authData[0],
-                            password: authData[1],
-                          );
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(authData[0])
-                              .set({
-                            'name': name,
-                            'age': age,
-                            'date of birth': dateOfBirth,
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

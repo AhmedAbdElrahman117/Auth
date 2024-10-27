@@ -1,34 +1,78 @@
-import 'package:auth/Features/login/presentation/view/widgets/custom_text_form_field.dart';
-import 'package:auth/Features/login/presentation/view_model/login_cubit/login_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PasswordTextField extends StatelessWidget {
-  const PasswordTextField({super.key});
+class PasswordTextField extends StatefulWidget {
+  const PasswordTextField(
+      {super.key,
+      required this.hintText,
+      required this.labelText,
+      this.validator,
+      required this.passwordController});
+
+  final String hintText;
+  final String labelText;
+  final String? Function(String? value)? validator;
+  final TextEditingController passwordController;
+
+  @override
+  State<PasswordTextField> createState() => _PasswordTextFieldState();
+}
+
+class _PasswordTextFieldState extends State<PasswordTextField> {
+  bool obsecure = true;
+  bool isFocused = false;
 
   @override
   Widget build(BuildContext context) {
-    return CustomTextFormField(
-      hintText: ' Enter you Password',
-      labelText: 'Password',
-      onChanged: (value) {
-        BlocProvider.of<LoginCubit>(context).pass = value;
-        BlocProvider.of<LoginCubit>(context).loginProgress();
+    return Focus(
+      onFocusChange: (value) {
+        setState(() {
+          isFocused = value;
+        });
       },
-      onFieldSubmitted: (value) {
-        BlocProvider.of<LoginCubit>(context).pass = value;
-        BlocProvider.of<LoginCubit>(context).loginProgress();
-      },
-      passwordControll: true,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Password Required';
-        } else if (value.length < 8) {
-          return 'Short Password';
-        } else {
-          return null;
-        }
-      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: TextFormField(
+          controller: widget.passwordController,
+          validator: widget.validator,
+          obscureText: obsecure,
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            labelText: widget.labelText,
+            labelStyle: const TextStyle(
+              color: Colors.black,
+            ),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            suffix: isFocused
+                ? InkWell(
+                    onTap: () {
+                      if (obsecure) {
+                        obsecure = false;
+                      } else {
+                        obsecure = true;
+                      }
+                      setState(() {});
+                    },
+                    child: Icon(
+                      obsecure ? Icons.visibility : Icons.visibility_off,
+                      size: 27,
+                    ),
+                  )
+                : null,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: Colors.grey.shade200,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                color: Colors.grey.shade400,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
