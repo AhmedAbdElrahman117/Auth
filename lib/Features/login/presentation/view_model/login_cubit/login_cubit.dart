@@ -8,10 +8,6 @@ import 'package:twitter_login/twitter_login.dart';
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginInitial());
 
-  void loginProgress() {
-    emit(LoginInProgress());
-  }
-
   void loginWithEmail({required String email, required String pass}) async {
     emit(LoginLoading());
     try {

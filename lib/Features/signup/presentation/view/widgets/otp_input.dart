@@ -30,10 +30,11 @@ class _OTPInputState extends State<OTPInput> {
         pinAnimationType: PinAnimationType.slide,
         defaultPinTheme: otpTheme(),
         onCompleted: (value) async {
-          if (EmailOTP.verifyOTP(otp: value)) {
+          if (EmailOTP.getOTP() == value) {
             await Get.to(
               () => PersonalInfo(userData: widget.userData),
               transition: Transition.rightToLeftWithFade,
+              popGesture: false,
             );
           } else {
             setState(() {

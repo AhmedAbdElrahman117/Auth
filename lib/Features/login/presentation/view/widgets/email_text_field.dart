@@ -1,6 +1,4 @@
-import 'package:auth/Features/signup/presentation/view/widgets/otp_input.dart';
 import 'package:flutter/material.dart';
-import 'package:pinput/pinput.dart';
 
 class EmailTextField extends StatelessWidget {
   const EmailTextField(
@@ -11,7 +9,6 @@ class EmailTextField extends StatelessWidget {
       required this.emailController,
       this.onTap,
       this.canRequestFocus = true,
-      this.onChanged,
       this.keyboardType});
 
   final String hintText;
@@ -20,7 +17,6 @@ class EmailTextField extends StatelessWidget {
   final TextEditingController emailController;
   final void Function()? onTap;
   final bool? canRequestFocus;
-  final void Function(String value)? onChanged;
   final TextInputType? keyboardType;
 
   @override
@@ -31,7 +27,6 @@ class EmailTextField extends StatelessWidget {
         controller: emailController,
         validator: validator,
         onTap: onTap,
-        onChanged: onChanged,
         keyboardType: keyboardType,
         canRequestFocus: canRequestFocus!,
         decoration: InputDecoration(

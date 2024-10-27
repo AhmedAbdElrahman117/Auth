@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:auth/Features/login/presentation/view/widgets/email_text_field.dart';
 import 'package:auth/Features/login/presentation/view/widgets/logo.dart';
 import 'package:auth/Features/login/presentation/view/widgets/sign_button.dart';
 import 'package:auth/Features/signup/data/user_data.dart';
@@ -9,12 +6,9 @@ import 'package:auth/Features/signup/presentation/view/widgets/date_of_birth.dar
 import 'package:auth/Features/signup/presentation/view/widgets/user_name.dart';
 import 'package:auth/Features/signup/presentation/view_model/SignUpCubit/sign_up_cubit.dart';
 import 'package:auth/Features/signup/presentation/view_model/sign_up_states.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:pinput/pinput.dart';
 
 class PersonalInfo extends StatelessWidget {
   const PersonalInfo({

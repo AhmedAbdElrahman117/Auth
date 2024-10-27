@@ -11,3 +11,7 @@ class SignUpFailed extends SignUpStates {
 }
 
 class SignUpSuccess extends SignUpStates {}
+
+class CheckUserLoading extends SignUpStates {}
+
+class CheckUserEnd extends SignUpStates {}

@@ -1,10 +1,8 @@
 import 'package:auth/Features/login/presentation/view/widgets/logo.dart';
 import 'package:auth/Features/signup/data/user_data.dart';
 import 'package:auth/Features/signup/presentation/view/widgets/otp_input.dart';
-import 'package:auth/Features/signup/presentation/view/widgets/personal_info.dart';
-import 'package:email_otp/email_otp.dart';
+import 'package:auth/Features/signup/presentation/view/widgets/resend_code_button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class EmailConfirm extends StatelessWidget {
   const EmailConfirm({super.key, required this.userData});
@@ -41,22 +39,7 @@ class EmailConfirm extends StatelessWidget {
               ),
             ),
             OTPInput(userData: userData),
-            TextButton(
-              onPressed: () async {
-                // await EmailOTP.sendOTP(email: userData.email);
-                await Get.to(
-                  () => PersonalInfo(userData: userData),
-                );
-              },
-              child: const Text(
-                'Resend Code',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+            ResendCodeButton(userData: userData),
           ],
         ),
       ),
