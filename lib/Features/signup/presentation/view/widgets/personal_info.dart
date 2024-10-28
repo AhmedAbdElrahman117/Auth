@@ -8,6 +8,7 @@ import 'package:auth/Features/signup/presentation/view_model/SignUpCubit/sign_up
 import 'package:auth/Features/signup/presentation/view_model/sign_up_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class PersonalInfo extends StatelessWidget {
@@ -25,7 +26,17 @@ class PersonalInfo extends StatelessWidget {
     TextEditingController dateController = TextEditingController();
     TextEditingController ageController = TextEditingController();
 
-    return BlocBuilder<SignUpCubit, SignUpStates>(
+    return BlocConsumer<SignUpCubit, SignUpStates>(
+      listener: (context, state) {
+        if (state is SignUpSuccess) {
+          Get.defaultDialog(title: 'Success');
+        } else if (state is SignUpFailed) {
+          Get.defaultDialog(
+            title: 'Failed',
+            middleText: state.errorMessage,
+          );
+        }
+      },
       builder: (context, state) {
         return ModalProgressHUD(
           inAsyncCall: state is SignUpLoading,

@@ -5,6 +5,7 @@ import 'package:auth/constant.dart';
 import 'package:auth/example_home.dart';
 import 'package:auth/firebase_options.dart';
 import 'package:email_otp/email_otp.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,6 +42,11 @@ class _AuthState extends State<Auth> {
   @override
   void initState() {
     isLogged = box.read('isRemember') ?? false;
+    if (isLogged) {
+      FirebaseAuth.instance.authStateChanges().listen(
+            (event) {},
+          );
+    }
     super.initState();
   }
 
@@ -53,8 +59,16 @@ class _AuthState extends State<Auth> {
       ],
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: /*isLogged ? const ExampleHome() :*/ const LoginView(),
+        home: isRemembered(),
       ),
     );
+  }
+
+  Widget isRemembered() {
+    if (isLogged && FirebaseAuth.instance.currentUser != null) {
+      return const ExampleHome();
+    } else {
+      return const LoginView();
+    }
   }
 }

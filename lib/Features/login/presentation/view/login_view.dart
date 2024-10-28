@@ -9,6 +9,8 @@ import 'package:auth/Features/login/presentation/view/widgets/social_login.dart'
 import 'package:auth/Features/login/presentation/view/widgets/welcome_text.dart';
 import 'package:auth/Features/login/presentation/view_model/login_cubit/login_cubit.dart';
 import 'package:auth/Features/login/presentation/view_model/login_cubit/login_states.dart';
+import 'package:auth/constant.dart';
+import 'package:auth/example_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -26,7 +28,7 @@ class LoginView extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          print('Logged In');
+          Get.to(() => const ExampleHome(), transition: kTrans);
         } else if (state is LoginFailed) {
           Get.defaultDialog(
             title: 'Failed',

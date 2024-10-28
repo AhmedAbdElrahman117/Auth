@@ -36,14 +36,13 @@ class SignUpCubit extends Cubit<SignUpStates> {
   }
 
   void checkUser(UserData userData) async {
-    emit(CheckUserLoading());
+    emit(SignUpLoading());
 
     var x = await FirebaseFirestore.instance
         .collection('users')
         .doc(userData.email)
         .get();
     if (x.exists) {
-      emit(CheckUserEnd());
       Get.defaultDialog(
         title: 'Sign Up Failed',
         middleText: 'Email Address Already Used',
@@ -54,7 +53,6 @@ class SignUpCubit extends Cubit<SignUpStates> {
         () => EmailConfirm(userData: userData),
         transition: kTrans,
       );
-      emit(CheckUserEnd());
     }
   }
 }
