@@ -15,6 +15,10 @@ A modern, secure, and user-friendly authentication app built with **Flutter**. A
 
 ---
 
+## Screenshots
+
+  <img src="assets/images/Screenshot_1757096846.png" width="200"/> &nbsp;&nbsp;&nbsp; <img src="assets/images/Screenshot_1757096856.png" width="200"/> &nbsp;&nbsp;&nbsp; <img src="assets/images/Screenshot_1757096889.png" width="200"/> &nbsp;&nbsp;&nbsp;
+
 ## 🚀 Getting Started
 
 ### Prerequisites
