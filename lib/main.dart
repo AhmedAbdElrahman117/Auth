@@ -39,13 +39,19 @@ class Auth extends StatefulWidget {
 
 class _AuthState extends State<Auth> {
   late bool isLogged;
+  late User? user;
   @override
   void initState() {
     isLogged = box.read('isRemember') ?? false;
     if (isLogged) {
       FirebaseAuth.instance.authStateChanges().listen(
-            (event) {},
-          );
+        (event) {
+          user = event;
+        },
+        onError: (e) {
+          user = null;
+        },
+      );
     }
     super.initState();
   }
@@ -65,7 +71,7 @@ class _AuthState extends State<Auth> {
   }
 
   Widget isRemembered() {
-    if (isLogged && FirebaseAuth.instance.currentUser != null) {
+    if (isLogged && user != null) {
       return const ExampleHome();
     } else {
       return const LoginView();

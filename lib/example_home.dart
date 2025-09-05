@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:auth/Features/login/presentation/view/login_view.dart';
 import 'package:auth/constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,14 +21,14 @@ class ExampleHome extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginView();
+                      return const LoginView();
                     },
                   ),
                 );
               },
             );
           },
-          child: Text('Logout'),
+          child: const Text('Logout'),
         ),
       ),
     );

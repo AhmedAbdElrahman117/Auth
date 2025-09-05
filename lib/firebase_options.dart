@@ -46,16 +46,16 @@ class DefaultFirebaseOptions {
     messagingSenderId: '349636619374',
     projectId: 'auth-375d5',
     authDomain: 'auth-375d5.firebaseapp.com',
-    storageBucket: 'auth-375d5.appspot.com',
+    storageBucket: 'auth-375d5.firebasestorage.app',
     measurementId: 'G-XDMR4HT4QK',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCrnnarYTiRTKKBRKuHzti-E1cjcMbe_S4',
-    appId: '1:349636619374:android:38f0125f6347b8107f8a7f',
+    appId: '1:349636619374:android:1aa5ae068a0d54437f8a7f',
     messagingSenderId: '349636619374',
     projectId: 'auth-375d5',
-    storageBucket: 'auth-375d5.appspot.com',
+    storageBucket: 'auth-375d5.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -63,7 +63,9 @@ class DefaultFirebaseOptions {
     appId: '1:349636619374:ios:8707ae8dd82d32677f8a7f',
     messagingSenderId: '349636619374',
     projectId: 'auth-375d5',
-    storageBucket: 'auth-375d5.appspot.com',
+    storageBucket: 'auth-375d5.firebasestorage.app',
+    androidClientId: '349636619374-c0nt4ochm0sv96qnveqcp2q54dbaggrh.apps.googleusercontent.com',
+    iosClientId: '349636619374-k51miamfjga84p432kk3ukpj5e606u3i.apps.googleusercontent.com',
     iosBundleId: 'com.example.auth',
   );
 
@@ -72,7 +74,9 @@ class DefaultFirebaseOptions {
     appId: '1:349636619374:ios:8707ae8dd82d32677f8a7f',
     messagingSenderId: '349636619374',
     projectId: 'auth-375d5',
-    storageBucket: 'auth-375d5.appspot.com',
+    storageBucket: 'auth-375d5.firebasestorage.app',
+    androidClientId: '349636619374-c0nt4ochm0sv96qnveqcp2q54dbaggrh.apps.googleusercontent.com',
+    iosClientId: '349636619374-k51miamfjga84p432kk3ukpj5e606u3i.apps.googleusercontent.com',
     iosBundleId: 'com.example.auth',
   );
 
@@ -82,7 +86,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '349636619374',
     projectId: 'auth-375d5',
     authDomain: 'auth-375d5.firebaseapp.com',
-    storageBucket: 'auth-375d5.appspot.com',
+    storageBucket: 'auth-375d5.firebasestorage.app',
     measurementId: 'G-CBL0G7R58Y',
   );
 }
